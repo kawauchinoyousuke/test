@@ -1,5 +1,5 @@
 class BlogsController < ApplicationController
-  before_action :set_blogs, only: %i[create edit update destroy]
+  before_action :set_blogs, only: %i[edit update destroy]
 
   def index
     @blogs = Blog.all
@@ -10,6 +10,7 @@ class BlogsController < ApplicationController
   end
 
   def create
+    @blog = Blog.new(blog_params)
     if @blog.save
       redirect_to blogs_path, notice: "ブログを登録したよ"
     else
@@ -37,7 +38,7 @@ class BlogsController < ApplicationController
   private
 
   def blog_params
-    params.reqire(:blog).permit(:title, :content)
+    params.require(:blog).permit(:title, :content)
   end
 
   def set_blogs
